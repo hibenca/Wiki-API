@@ -2,8 +2,6 @@
 
 ![Wiki-API](https://i.postimg.cc/8z5fTZb0/RESTful-API.png)
 
-[Working Newsletter on Herkoku](https://shielded-sands-59175.herokuapp.com/)
-
 # Tools used
 
 * HTML/CSS
