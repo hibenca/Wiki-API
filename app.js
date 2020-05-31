@@ -73,23 +73,69 @@ app.route("/articles")
         res.send(err);
       }
     });
-    // .put()
-    // .patch()
   });
-
 
 /////////////////////////Requests targeting specific articles///////////////////////////////////
 app.route("/articles/:articleTitle")
 
   .get(function(req, res) {
-    Article.findOne({ title: req.params.articleTitle }, function(err, foundArticle) {
+    Article.findOne({
+      title: req.params.articleTitle
+    }, function(err, foundArticle) {
       if (foundArticle) {
         res.send(foundArticle);
       } else {
         res.send("No articles matching that title was found.")
       }
     });
+  })
+
+  .put(function(req, res) {
+    Article.update({
+        title: req.params.articleTitle
+      }, {
+        title: req.body.title,
+        content: req.body.content
+      }, {
+        overwrite: true
+      },
+      function(err) {
+        if (!err) {
+          res.send("Successfully updated the article");
+        } else {
+          res.send(err);
+        }
+      }
+    );
+  })
+
+  .patch(function(req, res) {
+    Article.update({
+      title: req.params.articleTitle
+    }, {
+      $set: req.body
+    }, function(err) {
+      if (!err) {
+        res.send("Successfully updated the article");
+      } else {
+        res.send(err);
+      }
+    })
+  })
+
+  .delete(function(req, res) {
+    Article.deleteOne({
+        title: req.params.articleTitle
+      },
+      function(err) {
+        if (!err) {
+          res.send("Successfully deleted the article.");
+        } else {
+          res.send(err);
+        }
+      });
   });
+
 
 /////////////////////////GET Articles///////////////////////////////////
 app.get("/", function(req, res) {
